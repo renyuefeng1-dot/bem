@@ -74,3 +74,11 @@ cd frontend && python3 -m http.server 8080   # 打开 http://localhost:8080
 
 ## 许可证
 MIT，见 LICENSE。
+
+## 主网部署（BSC，chainId 56）
+
+- BountyBoard：[`0xaf81078fa7df6af5e5bd97b98a358939600ec320`](https://bscscan.com/address/0xaf81078fa7df6af5e5bd97b98a358939600ec320)
+- 绑定代币 BEM：`0x5ce033B2bFCa3Af30b3e8C8457DeaF776A8b695a`（8 位小数）
+- 部署交易：[`0x7b8ac211…3e2c`](https://bscscan.com/tx/0x7b8ac2111edf160536fa1654d6e91863723607b941e2c8c2253350e477f73e2c)
+- 销毁：发布 0.5%，支付 10%，均转入 `0x…dEaD`
+- 合约未经审计，请先小额使用。
