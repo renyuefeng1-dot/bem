@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.24"
+optimizer = true
+optimizer_runs = 200
+remappings = ["@openzeppelin/=lib/openzeppelin-contracts/", "forge-std/=lib/forge-std/src/"]
+
+[rpc_endpoints]
+bsc_testnet = "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
+bsc = "https://bsc-dataseed.bnbchain.org"

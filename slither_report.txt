@@ -1,0 +1,56 @@
+'forge clean' running (wd: /workspace/bem_bounty)
+'forge config --json' running
+'forge build --build-info --deny never --skip ./test/** ./script/** --force' running (wd: /workspace/bem_bounty)
+INFO:Detectors:
+Detector: reentrancy-balance
+Reentrancy in BountyBoard.createTask(uint256,uint64,string) (src/BountyBoard.sol#68-89):
+	External call allowing reentrancy:
+	- token.safeTransferFrom(msg.sender,address(this),amount) (src/BountyBoard.sol#72)
+	Balance read before the call:
+	- beforeBal = token.balanceOf(address(this)) (src/BountyBoard.sol#71)
+	Possible stale balance used after the call in a condition:
+	- received == 0 (src/BountyBoard.sol#74)
+		- stale variable `received`
+	- reward == 0 (src/BountyBoard.sol#77)
+		- stale variable `reward`
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+INFO:Detectors:
+Detector: incorrect-equality
+BountyBoard.createTask(uint256,uint64,string) (src/BountyBoard.sol#68-89) uses a dangerous strict equality:
+	- received == 0 (src/BountyBoard.sol#74)
+BountyBoard.createTask(uint256,uint64,string) (src/BountyBoard.sol#68-89) uses a dangerous strict equality:
+	- reward == 0 (src/BountyBoard.sol#77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Detector: reentrancy-benign
+Reentrancy in BountyBoard.createTask(uint256,uint64,string) (src/BountyBoard.sol#68-89):
+	External calls:
+	- token.safeTransferFrom(msg.sender,address(this),amount) (src/BountyBoard.sol#72)
+	State variables written after the call(s):
+	- t.poster = msg.sender (src/BountyBoard.sol#81)
+	- t.reward = reward (src/BountyBoard.sol#82)
+	- t.deadline = deadline (src/BountyBoard.sol#83)
+	- t.status = Status.Open (src/BountyBoard.sol#84)
+	- t.metadataURI = metadataURI (src/BountyBoard.sol#85)
+	- id = ++ taskCount (src/BountyBoard.sol#79)
+	- totalEscrowed += reward (src/BountyBoard.sol#86)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+Detector: timestamp
+BountyBoard.createTask(uint256,uint64,string) (src/BountyBoard.sol#68-89) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount == 0 || deadline < block.timestamp + MIN_DURATION || bytes(metadataURI).length == 0 (src/BountyBoard.sol#69)
+BountyBoard.submit(uint256,string) (src/BountyBoard.sol#91-101) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp > t.deadline (src/BountyBoard.sol#94)
+BountyBoard.reject(uint256) (src/BountyBoard.sol#111-122) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp > t.submittedAt + REVIEW_WINDOW (src/BountyBoard.sol#115)
+BountyBoard.claim(uint256) (src/BountyBoard.sol#125-131) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp <= t.submittedAt + REVIEW_WINDOW (src/BountyBoard.sol#129)
+BountyBoard.reclaim(uint256) (src/BountyBoard.sol#145-156) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp <= t.deadline (src/BountyBoard.sol#149)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Slither:. analyzed (16 contracts with 102 detectors), 9 result(s) found
